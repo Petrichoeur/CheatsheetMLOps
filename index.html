@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLOps Cyberpunk Cheatsheet V3 - Heavy</title>
+    <title>MLOps Ultimate Cheatsheet</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #050505;
-            --card-bg: #0a0f14;
-            --text-main: #e0e0e0;
+            --card-bg: #0b1015;
+            --text-main: #c0c0c0;
             --neon-blue: #00f3ff;
             --neon-pink: #ff00ff;
             --neon-green: #39ff14;
             --neon-yellow: #fcee0a;
-            --neon-orange: #ff5e00;
-            --border-color: #333;
+            --neon-red: #ff2a2a;
+            --border-dim: #333;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-color);
@@ -33,267 +29,219 @@
                 linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
+            padding-bottom: 50px;
         }
 
         /* --- Header --- */
         header {
             text-align: center;
             padding: 40px 20px;
-            border-bottom: 2px solid var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header-top {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-
-        .export-btn {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            padding: 8px 15px;
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
-
-        .export-btn:hover {
-            background: var(--neon-green);
-            color: black;
-            box-shadow: 0 0 15px var(--neon-green);
+            border-bottom: 1px solid var(--neon-blue);
+            background: rgba(5, 5, 5, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            text-transform: uppercase;
+            font-size: 2.5rem;
             color: var(--neon-blue);
             text-shadow: 0 0 10px var(--neon-blue);
-            position: relative;
-            display: inline-block;
-            margin: 0;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
         }
 
-        h1::before, h1::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* --- Controls (Search + Filters) --- */
+        .controls {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-box {
             width: 100%;
-            height: 100%;
-            background: var(--bg-color);
+            max-width: 600px;
+            position: relative;
         }
 
-        h1::before {
-            left: 2px;
-            text-shadow: -1px 0 var(--neon-pink);
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        .search-box input {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 12px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 0 5px rgba(57, 255, 20, 0.2);
         }
 
-        h1::after {
-            left: -2px;
-            text-shadow: -1px 0 var(--neon-green);
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        .search-box input:focus {
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
         }
 
-        /* --- Navigation --- */
         .filters {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 15px;
-            padding: 30px 20px;
+            justify-content: center;
+            gap: 10px;
         }
 
         .filter-btn {
             background: transparent;
             border: 1px solid var(--neon-pink);
             color: var(--neon-pink);
-            padding: 10px 20px;
+            padding: 8px 16px;
             font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             text-transform: uppercase;
-            font-weight: bold;
-            box-shadow: 0 0 5px var(--neon-pink);
         }
 
         .filter-btn:hover, .filter-btn.active {
             background: var(--neon-pink);
-            color: var(--bg-color);
-            box-shadow: 0 0 20px var(--neon-pink);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-pink);
         }
 
-        /* --- Grid Layout --- */
-        .container {
-            max-width: 1600px; /* Wider for more content */
-            margin: 0 auto;
-            padding: 20px;
+        /* --- Grid --- */
+        .grid-container {
+            max-width: 1600px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Wider cards */
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 25px;
         }
 
-        /* --- Cards --- */
+        /* --- Card --- */
         .card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-left: 5px solid var(--neon-blue);
-            padding: 20px;
-            position: relative;
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-            display: flex;
+            border: 1px solid var(--border-dim);
+            border-top: 3px solid var(--neon-blue);
+            height: 600px; /* Fixed height for consistency */
+            display: flex; /* Flex required for scroll internal */
             flex-direction: column;
-            max-height: 600px; /* Fixed height for UI consistency */
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            animation: scanline 2s linear infinite;
-            z-index: 2;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
             border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-green);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
+        .card-header {
+            padding: 15px 20px;
+            background: rgba(0, 243, 255, 0.05);
+            border-bottom: 1px solid var(--border-dim);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
         }
 
-        .card h3 span {
-            font-size: 0.8rem;
-            color: #666;
-            border: 1px solid #666;
-            padding: 2px 6px;
-            border-radius: 4px;
+        .card-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            font-size: 1.2rem;
         }
 
-        .card.python-ml { border-left-color: var(--neon-orange); }
-        .card.python-ml h3 { color: var(--neon-orange); }
+        .card-header span {
+            font-size: 0.7rem;
+            color: #555;
+            border: 1px solid #333;
+            padding: 2px 5px;
+        }
 
-        /* --- Command List with SCROLLBAR --- */
+        /* Custom Colors per Domain if needed */
+        .card[data-category="gpu"] { border-top-color: var(--neon-green); }
+        .card[data-category="gpu"] h3 { color: var(--neon-green); }
+        
+        .card[data-category="git"] { border-top-color: var(--neon-red); }
+        .card[data-category="git"] h3 { color: var(--neon-red); }
+
+        /* --- Scrollable List --- */
         .cmd-list {
             list-style: none;
-            overflow-y: auto; /* Enable scrolling */
+            overflow-y: auto;
             flex-grow: 1;
-            padding-right: 10px;
+            padding: 10px 20px;
         }
 
-        /* Custom Scrollbar for Cyberpunk look */
-        .cmd-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        .cmd-list::-webkit-scrollbar-track {
-            background: #000;
-        }
-        .cmd-list::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 3px;
-        }
-        .card:hover .cmd-list::-webkit-scrollbar-thumb {
-            background: var(--neon-blue);
-        }
-        .card.python-ml:hover .cmd-list::-webkit-scrollbar-thumb {
-            background: var(--neon-orange);
-        }
+        /* Scrollbar styling */
+        .cmd-list::-webkit-scrollbar { width: 6px; }
+        .cmd-list::-webkit-scrollbar-track { background: #000; }
+        .cmd-list::-webkit-scrollbar-thumb { background: #333; }
+        .cmd-list:hover::-webkit-scrollbar-thumb { background: var(--neon-blue); }
 
         .cmd-item {
             margin-bottom: 15px;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px dashed #222;
             padding-bottom: 10px;
         }
 
         .cmd-desc {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #888;
             margin-bottom: 4px;
             font-weight: bold;
-            letter-spacing: 0.5px;
+        }
+
+        .code-wrapper {
+            position: relative;
+            cursor: pointer;
         }
 
         .code-block {
-            background: #000;
-            padding: 8px 12px;
-            border: 1px solid #333;
-            color: var(--neon-yellow);
-            font-size: 0.8rem;
-            cursor: pointer;
-            position: relative;
             display: block;
-            word-wrap: break-word;
-            font-family: 'Roboto Mono', monospace;
-            transition: border-color 0.2s;
+            background: #000;
+            border: 1px solid #222;
+            color: var(--neon-yellow);
+            padding: 8px;
+            font-size: 0.85rem;
+            word-break: break-all;
+            transition: all 0.2s;
         }
 
-        .code-block:hover {
+        .code-wrapper:hover .code-block {
             border-color: var(--neon-yellow);
-            background: #0f0f0f;
+            background: #0a0a0a;
         }
 
-        .code-block::after {
-            content: '[COPY]';
+        .code-wrapper::after {
+            content: 'COPY';
             position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
+            right: 0;
+            top: 0;
+            background: var(--neon-blue);
+            color: #000;
             font-size: 0.6rem;
-            color: var(--neon-blue);
+            padding: 2px 6px;
+            font-weight: bold;
             opacity: 0;
             transition: opacity 0.2s;
         }
 
-        .code-block:hover::after {
-            opacity: 1;
-        }
+        .code-wrapper:hover::after { opacity: 1; }
 
-        /* --- Animations --- */
-        @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 80px, 0); } 20% { clip: rect(60px, 9999px, 10px, 0); } 40% { clip: rect(100px, 9999px, 120px, 0); } 60% { clip: rect(10px, 9999px, 60px, 0); } 80% { clip: rect(50px, 9999px, 90px, 0); } 100% { clip: rect(30px, 9999px, 110px, 0); } }
-        @keyframes glitch-anim-2 { 0% { clip: rect(120px, 9999px, 10px, 0); } 20% { clip: rect(10px, 9999px, 60px, 0); } 40% { clip: rect(50px, 9999px, 90px, 0); } 60% { clip: rect(100px, 9999px, 120px, 0); } 80% { clip: rect(20px, 9999px, 80px, 0); } 100% { clip: rect(60px, 9999px, 100px, 0); } }
-        @keyframes scanline { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-        /* Toast */
+        /* --- Toast Notification --- */
         #toast {
             visibility: hidden;
             min-width: 250px;
             background-color: var(--neon-green);
-            color: #000;
+            color: black;
             text-align: center;
-            border-radius: 2px;
             padding: 16px;
             position: fixed;
-            z-index: 100;
+            z-index: 2000;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
@@ -302,123 +250,115 @@
             box-shadow: 0 0 20px var(--neon-green);
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* --- PRINT STYLES --- */
-        @media print {
-            body { background: white; color: black; background-image: none; }
-            header { border-bottom: 2px solid #000; box-shadow: none; }
-            h1 { color: #000; text-shadow: none; }
-            h1::before, h1::after { display: none; }
-            .filters, .export-btn, #toast, .card::before { display: none !important; }
-            .container { display: block; column-count: 2; gap: 15px; }
-            .card {
-                background: #fff; border: 1px solid #000; border-left: 5px solid #000 !important;
-                box-shadow: none; margin-bottom: 20px; break-inside: avoid;
-                max-height: none; /* Expand full height for print */
-                display: block;
-            }
-            .cmd-list { overflow-y: visible; max-height: none; } /* Show all commands */
-            .card h3 { color: #000 !important; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
-            .card h3 span { color: #000; border-color: #000; }
-            .code-block { background: #f4f4f4; color: #000; border: 1px solid #ccc; font-size: 7pt; padding: 4px; }
-            .cmd-desc { color: #333; font-size: 8pt; }
-            .code-block::after { display: none; }
-            .cmd-item { border-bottom: 1px dotted #ccc; margin-bottom: 8px; padding-bottom: 4px; }
-        }
+        /* Utility */
+        .hidden { display: none !important; }
 
-        @media screen and (max-width: 768px) {
-            .header-top { flex-direction: column; align-items: center; }
-            .export-btn { position: static; margin-top: 15px; transform: none; }
-            h1 { font-size: 2rem; }
-        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-top">
-            <h1 data-text="MLOps_NEXUS">MLOps_NEXUS</h1>
-            <button class="export-btn" onclick="exportPDF()">[ PDF_EXPORT ]</button>
+        <div class="controls">
+            <h1>MLOPS_NEXUS_V4</h1>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder=">> SEARCH_COMMANDS...">
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">ALL</button>
+                <button class="filter-btn" data-filter="bash">BASH</button>
+                <button class="filter-btn" data-filter="docker">DOCKER</button>
+                <button class="filter-btn" data-filter="k8s">KUBERNETES</button>
+                <button class="filter-btn" data-filter="openshift">OPENSHIFT</button>
+                <button class="filter-btn" data-filter="runai">RUN:AI</button>
+                <button class="filter-btn" data-filter="gpu">NVIDIA GPU</button>
+                <button class="filter-btn" data-filter="elastic">ELASTIC</button>
+                <button class="filter-btn" data-filter="grafana">GRAFANA</button>
+                <button class="filter-btn" data-filter="git">GIT</button>
+            </div>
         </div>
-        <p style="color: var(--neon-pink); margin-top: 10px;">>> DATABASE EXPANDED // V3.0 FULL STACK</p>
     </header>
 
-    <div class="filters">
-        <button class="filter-btn active" onclick="filterSelection('all')">ALL</button>
-        <button class="filter-btn" onclick="filterSelection('container')">CONTAINERS</button>
-        <button class="filter-btn" onclick="filterSelection('serving')">SERVING</button>
-        <button class="filter-btn" onclick="filterSelection('ops')">OPS</button>
-        <button class="filter-btn" onclick="filterSelection('python-ml')">PYTHON</button>
-        <button class="filter-btn" onclick="filterSelection('scripting')">BASH</button>
-    </div>
+    <div class="grid-container" id="grid">
 
-    <div class="container">
-
-        <div class="card container-cat">
-            <h3>DOCKER <span>CONTAINER</span></h3>
+        <div class="card" data-category="bash">
+            <div class="card-header"><h3>BASH</h3><span>SHELL</span></div>
             <ul class="cmd-list">
-                <li class="cmd-item"><div class="cmd-desc">Build sans cache (Debug)</div><code class="code-block">docker build --no-cache -t img:v1 .</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Run interactif GPU</div><code class="code-block">docker run --gpus all -it --rm img:v1</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Stats (CPU/RAM live)</div><code class="code-block">docker stats</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Nettoyage radical</div><code class="code-block">docker system prune -a --volumes</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Voir IP d'un container</div><code class="code-block">docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [id]</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Exec en root</div><code class="code-block">docker exec -u 0 -it [container] bash</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Logs avec timestamp</div><code class="code-block">docker logs -t --tail 100 [container]</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Créer image depuis container</div><code class="code-block">docker commit [container_id] my-backup:v1</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Sauvegarder image en tar</div><code class="code-block">docker save -o image.tar my-image:v1</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Lister volumes orphelins</div><code class="code-block">docker volume ls -qf dangling=true</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Créer réseau bridge</div><code class="code-block">docker network create ml-net</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Copier fichier Host->Container</div><code class="code-block">docker cp ./model.bin [id]:/app/models/</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Boucle sur fichiers</div><div class="code-wrapper"><code class="code-block">for f in *.log; do echo "Processing $f"; done</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Chercher texte (Récursif)</div><div class="code-wrapper"><code class="code-block">grep -rn "error" /var/log/</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Remplacer texte dans fichiers</div><div class="code-wrapper"><code class="code-block">sed -i 's/old/new/g' config.yaml</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Surveiller commande</div><div class="code-wrapper"><code class="code-block">watch -n 1 "kubectl get pods"</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">JSON Parsing (JQ)</div><div class="code-wrapper"><code class="code-block">cat data.json | jq '.items[].status'</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir taille dossiers</div><div class="code-wrapper"><code class="code-block">du -sh * | sort -hr</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Top Process par RAM</div><div class="code-wrapper"><code class="code-block">ps aux --sort=-%mem | head -10</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Historique commande + Date</div><div class="code-wrapper"><code class="code-block">export HISTTIMEFORMAT="%F %T "</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Téléchargement silencieux</div><div class="code-wrapper"><code class="code-block">curl -sO https://url.com/file.zip</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Compter lignes de code</div><div class="code-wrapper"><code class="code-block">find . -name "*.py" | xargs wc -l</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Supprimer fichiers vieux de +7j</div><div class="code-wrapper"><code class="code-block">find /logs -name "*.log" -mtime +7 -delete</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Extraire colonne (AWK)</div><div class="code-wrapper"><code class="code-block">docker ps | awk '{print $1}'</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir ports ouverts</div><div class="code-wrapper"><code class="code-block">netstat -tulpn</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Archiver dossier</div><div class="code-wrapper"><code class="code-block">tar -czvf archive.tar.gz ./folder</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Kill process par nom</div><div class="code-wrapper"><code class="code-block">pkill -f "python train.py"</code></div></li>
             </ul>
         </div>
 
-        <div class="card container-cat">
-            <h3>KUBERNETES <span>K8S</span></h3>
+        <div class="card" data-category="docker">
+            <div class="card-header"><h3>DOCKER</h3><span>CONTAINER</span></div>
             <ul class="cmd-list">
-                <li class="cmd-item"><div class="cmd-desc">Get Pods (Tous namespaces)</div><code class="code-block">kubectl get pods -A</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Describe (Debug Crash)</div><code class="code-block">kubectl describe pod [pod-name]</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Logs précédent (CrashLoop)</div><code class="code-block">kubectl logs [pod] --previous</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Events (Pourquoi ça plante ?)</div><code class="code-block">kubectl get events --sort-by=.metadata.creationTimestamp</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Utilisation Node (CPU/RAM)</div><code class="code-block">kubectl top nodes</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Utilisation Pods</div><code class="code-block">kubectl top pods -n my-ns</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Port Forward (Bg)</div><code class="code-block">kubectl port-forward svc/ml-api 8000:80 &</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Changer image live</div><code class="code-block">kubectl set image deployment/myapp container=img:v2</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Supprimer pods 'Evicted'</div><code class="code-block">kubectl delete pods --field-selector=status.phase=Failed -A</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Check Permissions (RBAC)</div><code class="code-block">kubectl auth can-i create pods --as system:serviceaccount:ns:sa</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Expliquer ressource</div><code class="code-block">kubectl explain deployment.spec.strategy</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Scaler deployment</div><code class="code-block">kubectl scale --replicas=3 deployment/my-app</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Exec shell rapide</div><code class="code-block">kubectl exec -it [pod] -- /bin/bash</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Build sans cache</div><div class="code-wrapper"><code class="code-block">docker build --no-cache -t img:tag .</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Run avec GPU (Tous)</div><div class="code-wrapper"><code class="code-block">docker run --gpus all -it --rm img:tag</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Nettoyage complet</div><div class="code-wrapper"><code class="code-block">docker system prune -a --volumes</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Stats Live (CPU/RAM)</div><div class="code-wrapper"><code class="code-block">docker stats</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Exec en Root</div><div class="code-wrapper"><code class="code-block">docker exec -u 0 -it [id] bash</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Logs (Tail)</div><div class="code-wrapper"><code class="code-block">docker logs -f --tail 100 [id]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Inspecter IP</div><div class="code-wrapper"><code class="code-block">docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [id]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Copier Host vers Container</div><div class="code-wrapper"><code class="code-block">docker cp ./model.bin [id]:/app/</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister volumes orphelins</div><div class="code-wrapper"><code class="code-block">docker volume ls -qf dangling=true</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Export Image (Tar)</div><div class="code-wrapper"><code class="code-block">docker save -o image.tar my-image:v1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Commit Container -> Image</div><div class="code-wrapper"><code class="code-block">docker commit [id] my-snapshot:v1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir historique layers</div><div class="code-wrapper"><code class="code-block">docker history --no-trunc [image]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Restart Policy</div><div class="code-wrapper"><code class="code-block">docker run -d --restart unless-stopped img</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Login Registry</div><div class="code-wrapper"><code class="code-block">docker login registry.gitlab.com</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Kill all containers</div><div class="code-wrapper"><code class="code-block">docker rm -f $(docker ps -aq)</code></div></li>
             </ul>
         </div>
 
-        <div class="card container-cat">
-            <h3>OPENSHIFT <span>OCP</span></h3>
+        <div class="card" data-category="k8s">
+            <div class="card-header"><h3>KUBERNETES</h3><span>K8S</span></div>
             <ul class="cmd-list">
-                <li class="cmd-item"><div class="cmd-desc">Status du projet</div><code class="code-block">oc status</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Créer App depuis Git</div><code class="code-block">oc new-app https://github.com/org/repo --name=ml-api</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Logs du Build</div><code class="code-block">oc logs -f bc/ml-api</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Start Build manuellement</div><code class="code-block">oc start-build ml-api --follow</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Extraire un Secret</div><code class="code-block">oc extract secret/db-creds --to=.</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Debug Node (Admin)</div><code class="code-block">oc debug node/[node-name]</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Liste ImageStreams</div><code class="code-block">oc get is</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Ajouter droits Admin</div><code class="code-block">oc adm policy add-role-to-user admin user1 -n project</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Login avec Token</div><code class="code-block">oc login --token=sha256~... --server=https://api.ocp.domain:6443</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Port-forward route</div><code class="code-block">oc port-forward deployment/frontend 8080:8080</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Idle (Pause) app</div><code class="code-block">oc idle [service-name]</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister Pods (All NS)</div><div class="code-wrapper"><code class="code-block">kubectl get pods -A</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Debug Crash (Logs)</div><div class="code-wrapper"><code class="code-block">kubectl logs [pod] --previous</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Describe (Events)</div><div class="code-wrapper"><code class="code-block">kubectl describe pod [pod]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Shell dans Pod</div><div class="code-wrapper"><code class="code-block">kubectl exec -it [pod] -- /bin/bash</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Port Forward (Local)</div><div class="code-wrapper"><code class="code-block">kubectl port-forward svc/[name] 8080:80</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Top Nodes (CPU/RAM)</div><div class="code-wrapper"><code class="code-block">kubectl top nodes</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Supprimer Pods 'Evicted'</div><div class="code-wrapper"><code class="code-block">kubectl delete pods --field-selector=status.phase=Failed -A</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Changer Image (Rolling)</div><div class="code-wrapper"><code class="code-block">kubectl set image deployment/[name] [container]=img:v2</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Scaler manuellement</div><div class="code-wrapper"><code class="code-block">kubectl scale --replicas=3 deploy/[name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Créer Secret (Generic)</div><div class="code-wrapper"><code class="code-block">kubectl create secret generic my-sec --from-literal=pw=123</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Check Droits (RBAC)</div><div class="code-wrapper"><code class="code-block">kubectl auth can-i create pods --as system:serviceaccount:ns:sa</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Debug Pod (Netshoot)</div><div class="code-wrapper"><code class="code-block">kubectl run tmp-shell --rm -it --image nicolaka/netshoot</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Restart Rollout</div><div class="code-wrapper"><code class="code-block">kubectl rollout restart deployment/[name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Get YAML clean</div><div class="code-wrapper"><code class="code-block">kubectl get pod [name] -o yaml | grep -v "managedFields"</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Apply dossier</div><div class="code-wrapper"><code class="code-block">kubectl apply -f ./k8s-manifests/</code></div></li>
             </ul>
         </div>
 
-        <div class="card python-ml">
-            <h3>PANDAS <span>DATA</span></h3>
+        <div class="card" data-category="openshift">
+            <div class="card-header"><h3>OPENSHIFT</h3><span>OCP</span></div>
             <ul class="cmd-list">
-                <li class="cmd-item"><div class="cmd-desc">Read Parquet (Optimisé)</div><code class="code-block">df = pd.read_parquet('data.parquet', columns=['a', 'b'])</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Profile Mémoire</div><code class="code-block">df.info(memory_usage='deep')</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Optimiser Types</div><code class="code-block">df['cat'] = df['cat'].astype('category')</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Value Counts %</div><code class="code-block">df['col'].value_counts(normalize=True)</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Query (SQL-like)</div><code class="code-block">df.query('score > 0.5 and group == "A"')</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Groupby Agg</div><code class="code-block">df.groupby('id').agg({'val': ['mean', 'max']})</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Melt (Wide to Long)</div><code class="code-block">pd.melt(df, id_vars=['id'], value_vars=['A', 'B'])</code></li>
-                <li class="cmd-item"><div class="cmd-desc">Explode (Listes)</div><code class="code-block">df.explode('list_col')</code></li>
-                <li class="cmd-item"
+                <li class="cmd-item"><div class="cmd-desc">Changer Projet</div><div class="code-wrapper"><code class="code-block">oc project my-project</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir Routes (URL)</div><div class="code-wrapper"><code class="code-block">oc get routes</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Status global</div><div class="code-wrapper"><code class="code-block">oc status</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Shell distant (RSH)</div><div class="code-wrapper"><code class="code-block">oc rsh [pod-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Logs Build</div><div class="code-wrapper"><code class="code-block">oc logs -f bc/[build-config]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Start Build</div><div class="code-wrapper"><code class="code-block">oc start-build [bc-name] --follow</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Debug Node (Admin)</div><div class="code-wrapper"><code class="code-block">oc debug node/[node-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Extraire Secret</div><div class="code-wrapper"><code class="code-block">oc extract secret/db-pass --to=.</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Login Token</div><div class="code-wrapper"><code class="code-block">oc login --token=sha256~... --server=...</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister ImageStreams</div><div class="code-wrapper"><code class="code-block">oc ge
