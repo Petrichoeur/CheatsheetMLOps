@@ -361,4 +361,196 @@
                 <li class="cmd-item"><div class="cmd-desc">Debug Node (Admin)</div><div class="code-wrapper"><code class="code-block">oc debug node/[node-name]</code></div></li>
                 <li class="cmd-item"><div class="cmd-desc">Extraire Secret</div><div class="code-wrapper"><code class="code-block">oc extract secret/db-pass --to=.</code></div></li>
                 <li class="cmd-item"><div class="cmd-desc">Login Token</div><div class="code-wrapper"><code class="code-block">oc login --token=sha256~... --server=...</code></div></li>
-                <li class="cmd-item"><div class="cmd-desc">Lister ImageStreams</div><div class="code-wrapper"><code class="code-block">oc ge
+                <li class="cmd-item"><div class="cmd-desc">Lister ImageStreams</div><div class="code-wrapper"><code class="code-block">oc get is</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Donner droits Admin</div><div class="code-wrapper"><code class="code-block">oc adm policy add-role-to-user admin user1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Idle (Pause) Service</div><div class="code-wrapper"><code class="code-block">oc idle [service]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Debug Deployment</div><div class="code-wrapper"><code class="code-block">oc debug deployment/[name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Registry Login</div><div class="code-wrapper"><code class="code-block">docker login -u $(oc whoami) -p $(oc whoami -t) image-registry...</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Delete all in project</div><div class="code-wrapper"><code class="code-block">oc delete all --all</code></div></li>
+            </ul>
+        </div>
+
+        <div class="card" data-category="gpu">
+            <div class="card-header"><h3>NVIDIA GPU</h3><span>HARDWARE</span></div>
+            <ul class="cmd-list">
+                <li class="cmd-item"><div class="cmd-desc">Live Monitoring</div><div class="code-wrapper"><code class="code-block">watch -n 0.5 nvidia-smi</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Liste Processus GPU</div><div class="code-wrapper"><code class="code-block">nvidia-smi pmon -s u</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Query CSV (Automation)</div><div class="code-wrapper"><code class="code-block">nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Top GPU usage</div><div class="code-wrapper"><code class="code-block">nvtop</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir version CUDA</div><div class="code-wrapper"><code class="code-block">nvcc --version</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Reset GPU (Admin)</div><div class="code-wrapper"><code class="code-block">nvidia-smi --gpu-reset -i [gpu_id]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Persistence Mode</div><div class="code-wrapper"><code class="code-block">nvidia-smi -pm 1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Set Power Limit</div><div class="code-wrapper"><code class="code-block">nvidia-smi -pl 250</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister GPU UUIDs</div><div class="code-wrapper"><code class="code-block">nvidia-smi -L</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Vérifier Container Toolkit</div><div class="code-wrapper"><code class="code-block">docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">PyTorch Check</div><div class="code-wrapper"><code class="code-block">python -c "import torch; print(torch.cuda.is_available())"</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">MIG (Multi-Instance)</div><div class="code-wrapper"><code class="code-block">nvidia-smi mig -lgip</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Dmon (Scrolling stats)</div><div class="code-wrapper"><code class="code-block">nvidia-smi dmon</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Check NVLink</div><div class="code-wrapper"><code class="code-block">nvidia-smi nvlink --status</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Kill process GPU</div><div class="code-wrapper"><code class="code-block">kill -9 [pid_from_nvidia_smi]</code></div></li>
+            </ul>
+        </div>
+
+        <div class="card" data-category="runai">
+            <div class="card-header"><h3>RUN:AI</h3><span>SCHEDULER</span></div>
+            <ul class="cmd-list">
+                <li class="cmd-item"><div class="cmd-desc">Login</div><div class="code-wrapper"><code class="code-block">runai login</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister Jobs</div><div class="code-wrapper"><code class="code-block">runai list jobs</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Soumettre Job simple</div><div class="code-wrapper"><code class="code-block">runai submit my-job -i my-image -g 1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Soumettre Interactif</div><div class="code-wrapper"><code class="code-block">runai submit int-job -i my-image -g 1 --interactive --ttl 4h</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Describe Job</div><div class="code-wrapper"><code class="code-block">runai describe job [job-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Logs</div><div class="code-wrapper"><code class="code-block">runai logs [job-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Supprimer Job</div><div class="code-wrapper"><code class="code-block">runai delete job [job-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister Projets</div><div class="code-wrapper"><code class="code-block">runai list projects</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Changer Projet Defaut</div><div class="code-wrapper"><code class="code-block">runai config project [project-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Attach Shell</div><div class="code-wrapper"><code class="code-block">runai exec [job-name] -it -- /bin/bash</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Fractional GPU (0.5)</div><div class="code-wrapper"><code class="code-block">runai submit split-job -g 0.5 -i my-image</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Suspendre Job</div><div class="code-wrapper"><code class="code-block">runai suspend [job-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Reprendre Job</div><div class="code-wrapper"><code class="code-block">runai resume [job-name]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir Quotas</div><div class="code-wrapper"><code class="code-block">runai quota</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Port Forward Job</div><div class="code-wrapper"><code class="code-block">kubectl port-forward svc/job-[name] 8888:8888</code></div></li>
+            </ul>
+        </div>
+
+        <div class="card" data-category="elastic">
+            <div class="card-header"><h3>ELASTIC</h3><span>LOGGING</span></div>
+            <ul class="cmd-list">
+                <li class="cmd-item"><div class="cmd-desc">Santé Cluster</div><div class="code-wrapper"><code class="code-block">GET /_cluster/health?pretty</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister Indices (Compact)</div><div class="code-wrapper"><code class="code-block">GET /_cat/indices?v&s=index</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister Nodes</div><div class="code-wrapper"><code class="code-block">GET /_cat/nodes?v</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Recherche simple</div><div class="code-wrapper"><code class="code-block">GET /_search?q=status:500</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Recherche JSON Body</div><div class="code-wrapper"><code class="code-block">GET /idx/_search { "query": { "match": { "level": "error" }}}</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Supprimer Index</div><div class="code-wrapper"><code class="code-block">DELETE /logs-2023-*</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir Mapping</div><div class="code-wrapper"><code class="code-block">GET /my-index/_mapping</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Compter Documents</div><div class="code-wrapper"><code class="code-block">GET /_count</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Allocation (Pourquoi Unassigned ?)</div><div class="code-wrapper"><code class="code-block">GET /_cluster/allocation/explain</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Tâches en cours</div><div class="code-wrapper"><code class="code-block">GET /_tasks?detailed=true&actions=*write*</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Stats Index</div><div class="code-wrapper"><code class="code-block">GET /my-index/_stats</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Force Merge (Gain place)</div><div class="code-wrapper"><code class="code-block">POST /my-index/_forcemerge?max_num_segments=1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Aliases</div><div class="code-wrapper"><code class="code-block">GET /_cat/aliases?v</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Disk Usage</div><div class="code-wrapper"><code class="code-block">GET /_cat/allocation?v</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Snapshot Status</div><div class="code-wrapper"><code class="code-block">GET /_snapshot/_status</code></div></li>
+            </ul>
+        </div>
+
+        <div class="card" data-category="grafana">
+            <div class="card-header"><h3>GRAFANA/PROM</h3><span>METRICS</span></div>
+            <ul class="cmd-list">
+                <li class="cmd-item"><div class="cmd-desc">CPU Rate (5min)</div><div class="code-wrapper"><code class="code-block">rate(container_cpu_usage_seconds_total[5m])</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Memory Bytes</div><div class="code-wrapper"><code class="code-block">container_memory_usage_bytes</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Network In</div><div class="code-wrapper"><code class="code-block">rate(container_network_receive_bytes_total[1m])</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Restart Count</div><div class="code-wrapper"><code class="code-block">kube_pod_container_status_restarts_total</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Top 5 CPU Consumers</div><div class="code-wrapper"><code class="code-block">topk(5, rate(container_cpu_usage_seconds_total[5m]))</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Aggreg par Pod</div><div class="code-wrapper"><code class="code-block">sum(rate(container_cpu...)) by (pod)</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Filtrer par Namespace</div><div class="code-wrapper"><code class="code-block">{namespace="production"}</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Augmentation (Increase)</div><div class="code-wrapper"><code class="code-block">increase(http_requests_total[1h])</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">99th Percentile</div><div class="code-wrapper"><code class="code-block">histogram_quantile(0.99, sum(rate(bucket[5m])) by (le))</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Pod Absent (Alert)</div><div class="code-wrapper"><code class="code-block">absent(up{job="my-app"})</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Changement valeur (Delta)</div><div class="code-wrapper"><code class="code-block">delta(gauge_metric[1h])</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Regex Match</div><div class="code-wrapper"><code class="code-block">container_memory...{pod=~"frontend-.*"}</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">GPU Util (DCGM)</div><div class="code-wrapper"><code class="code-block">DCGM_FI_DEV_GPU_UTIL</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">GPU Memory (DCGM)</div><div class="code-wrapper"><code class="code-block">DCGM_FI_DEV_FB_USED</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Opération Math</div><div class="code-wrapper"><code class="code-block">metric_a / metric_b * 100</code></div></li>
+            </ul>
+        </div>
+
+        <div class="card" data-category="git">
+            <div class="card-header"><h3>GIT</h3><span>VERSIONING</span></div>
+            <ul class="cmd-list">
+                <li class="cmd-item"><div class="cmd-desc">Log joli graph</div><div class="code-wrapper"><code class="code-block">git log --graph --oneline --all</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Status propre</div><div class="code-wrapper"><code class="code-block">git status -sb</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Créer branche & switch</div><div class="code-wrapper"><code class="code-block">git checkout -b feature/new-algo</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Undo dernier commit (Soft)</div><div class="code-wrapper"><code class="code-block">git reset --soft HEAD~1</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Diff fichiers stagiés</div><div class="code-wrapper"><code class="code-block">git diff --cached</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Stash (Mettre de côté)</div><div class="code-wrapper"><code class="code-block">git stash save "wip model"</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Pop Stash</div><div class="code-wrapper"><code class="code-block">git stash pop</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Rebase main (Clean history)</div><div class="code-wrapper"><code class="code-block">git pull --rebase origin main</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Cherry Pick (Voler commit)</div><div class="code-wrapper"><code class="code-block">git cherry-pick [commit-hash]</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Nettoyer fichiers non suivis</div><div class="code-wrapper"><code class="code-block">git clean -fd</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Modifier dernier commit</div><div class="code-wrapper"><code class="code-block">git commit --amend --no-edit</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir qui a touché (Blame)</div><div class="code-wrapper"><code class="code-block">git blame file.py</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Remote URL Check</div><div class="code-wrapper"><code class="code-block">git remote -v</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Submodule Update</div><div class="code-wrapper"><code class="code-block">git submodule update --init --recursive</code></div></li>
+                <li class="cmd-item"><div class="cmd-desc">Trouver bug (Bisect)</div><div class="code-wrapper"><code class="code-block">git bisect start (puis bad/good)</code></div></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="toast">DATA_COPIED</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
+            const searchInput = document.getElementById('searchInput');
+            const toast = document.getElementById('toast');
+
+            // --- FILTER LOGIC ---
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Reset active class
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    cards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (filterValue === 'all' || category === filterValue) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // --- SEARCH LOGIC ---
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    // Si on cherche, on ignore le filtre de bouton actuel pour chercher partout
+                    // Ou on peut combiner. Ici je cherche dans tout le contenu visible.
+                    
+                    if (term === '') {
+                        // Si vide, réappliquer le filtre bouton actif
+                        const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                        const category = card.getAttribute('data-category');
+                        if (activeFilter === 'all' || category === activeFilter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    } else {
+                        // Recherche active
+                        if (text.includes(term)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            // --- COPY LOGIC ---
+            const codeWrappers = document.querySelectorAll('.code-wrapper');
+            codeWrappers.forEach(wrapper => {
+                wrapper.addEventListener('click', () => {
+                    const code = wrapper.querySelector('code').innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        toast.innerText = "> COMMAND_COPIED_TO_CLIPBOARD";
+                        toast.classList.add('show');
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
