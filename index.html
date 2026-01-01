@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLOps Cyberpunk Cheatsheet V2</title>
+    <title>MLOps Cyberpunk Cheatsheet V3 - Heavy</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -35,7 +35,7 @@
             background-size: 30px 30px;
         }
 
-        /* --- Header & Glitch Effect --- */
+        /* --- Header --- */
         header {
             text-align: center;
             padding: 40px 20px;
@@ -54,7 +54,6 @@
             position: relative;
         }
 
-        /* Export Button Styles */
         .export-btn {
             position: absolute;
             right: 20px;
@@ -112,7 +111,7 @@
             animation: glitch-anim 2.5s infinite linear alternate-reverse;
         }
 
-        /* --- Navigation / Filter --- */
+        /* --- Navigation --- */
         .filters {
             display: flex;
             justify-content: center;
@@ -142,11 +141,11 @@
 
         /* --- Grid Layout --- */
         .container {
-            max-width: 1400px;
+            max-width: 1600px; /* Wider for more content */
             margin: 0 auto;
             padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Wider cards */
             gap: 30px;
         }
 
@@ -159,7 +158,9 @@
             position: relative;
             transition: transform 0.3s, box-shadow 0.3s;
             overflow: hidden;
-            page-break-inside: avoid; /* For Printing */
+            display: flex;
+            flex-direction: column;
+            max-height: 600px; /* Fixed height for UI consistency */
         }
 
         .card::before {
@@ -171,6 +172,7 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
             animation: scanline 2s linear infinite;
+            z-index: 2;
         }
 
         .card:hover {
@@ -187,6 +189,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .card h3 span {
@@ -197,49 +200,66 @@
             border-radius: 4px;
         }
 
-        /* Special styling for Python/ML category */
-        .card.python-ml {
-            border-left-color: var(--neon-orange);
-        }
-        .card.python-ml h3 {
-            color: var(--neon-orange);
-        }
-        .card.python-ml::before {
-            background: linear-gradient(90deg, transparent, var(--neon-orange), transparent);
-        }
+        .card.python-ml { border-left-color: var(--neon-orange); }
+        .card.python-ml h3 { color: var(--neon-orange); }
 
-        /* --- Command List --- */
+        /* --- Command List with SCROLLBAR --- */
         .cmd-list {
             list-style: none;
+            overflow-y: auto; /* Enable scrolling */
+            flex-grow: 1;
+            padding-right: 10px;
+        }
+
+        /* Custom Scrollbar for Cyberpunk look */
+        .cmd-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .cmd-list::-webkit-scrollbar-track {
+            background: #000;
+        }
+        .cmd-list::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        .card:hover .cmd-list::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+        }
+        .card.python-ml:hover .cmd-list::-webkit-scrollbar-thumb {
+            background: var(--neon-orange);
         }
 
         .cmd-item {
             margin-bottom: 15px;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid #1a1a1a;
             padding-bottom: 10px;
         }
 
         .cmd-desc {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 4px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
         .code-block {
             background: #000;
-            padding: 8px;
+            padding: 8px 12px;
             border: 1px solid #333;
             color: var(--neon-yellow);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             cursor: pointer;
             position: relative;
             display: block;
             word-wrap: break-word;
             font-family: 'Roboto Mono', monospace;
+            transition: border-color 0.2s;
         }
 
         .code-block:hover {
             border-color: var(--neon-yellow);
+            background: #0f0f0f;
         }
 
         .code-block::after {
@@ -248,7 +268,7 @@
             right: 5px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: var(--neon-blue);
             opacity: 0;
             transition: opacity 0.2s;
@@ -259,28 +279,11 @@
         }
 
         /* --- Animations --- */
-        @keyframes glitch-anim {
-            0% { clip: rect(20px, 9999px, 80px, 0); }
-            20% { clip: rect(60px, 9999px, 10px, 0); }
-            40% { clip: rect(100px, 9999px, 120px, 0); }
-            60% { clip: rect(10px, 9999px, 60px, 0); }
-            80% { clip: rect(50px, 9999px, 90px, 0); }
-            100% { clip: rect(30px, 9999px, 110px, 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(120px, 9999px, 10px, 0); }
-            20% { clip: rect(10px, 9999px, 60px, 0); }
-            40% { clip: rect(50px, 9999px, 90px, 0); }
-            60% { clip: rect(100px, 9999px, 120px, 0); }
-            80% { clip: rect(20px, 9999px, 80px, 0); }
-            100% { clip: rect(60px, 9999px, 100px, 0); }
-        }
-        @keyframes scanline {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
+        @keyframes glitch-anim { 0% { clip: rect(20px, 9999px, 80px, 0); } 20% { clip: rect(60px, 9999px, 10px, 0); } 40% { clip: rect(100px, 9999px, 120px, 0); } 60% { clip: rect(10px, 9999px, 60px, 0); } 80% { clip: rect(50px, 9999px, 90px, 0); } 100% { clip: rect(30px, 9999px, 110px, 0); } }
+        @keyframes glitch-anim-2 { 0% { clip: rect(120px, 9999px, 10px, 0); } 20% { clip: rect(10px, 9999px, 60px, 0); } 40% { clip: rect(50px, 9999px, 90px, 0); } 60% { clip: rect(100px, 9999px, 120px, 0); } 80% { clip: rect(20px, 9999px, 80px, 0); } 100% { clip: rect(60px, 9999px, 100px, 0); } }
+        @keyframes scanline { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* Toast Notification */
+        /* Toast */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -290,7 +293,7 @@
             border-radius: 2px;
             padding: 16px;
             position: fixed;
-            z-index: 1;
+            z-index: 100;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
@@ -298,94 +301,38 @@
             font-weight: bold;
             box-shadow: 0 0 20px var(--neon-green);
         }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-        @keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
-        }
-
-        @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
-        }
-
-        /* --- PRINT / PDF EXPORT STYLES --- */
+        /* --- PRINT STYLES --- */
         @media print {
-            body {
-                background: white;
-                color: black;
-                background-image: none;
-            }
-            header {
-                border-bottom: 2px solid #000;
-                box-shadow: none;
-            }
-            h1 {
-                color: #000;
-                text-shadow: none;
-            }
-            h1::before, h1::after {
-                display: none; /* Remove Glitch */
-            }
-            p, .cmd-desc {
-                color: #333 !important;
-            }
-            .filters, .export-btn, #toast, .card::before {
-                display: none !important;
-            }
-            .container {
-                display: block; /* Stack items */
-                columns: 2; /* 2 columns for paper */
-            }
+            body { background: white; color: black; background-image: none; }
+            header { border-bottom: 2px solid #000; box-shadow: none; }
+            h1 { color: #000; text-shadow: none; }
+            h1::before, h1::after { display: none; }
+            .filters, .export-btn, #toast, .card::before { display: none !important; }
+            .container { display: block; column-count: 2; gap: 15px; }
             .card {
-                background: #fff;
-                border: 1px solid #000;
-                border-left: 5px solid #000 !important;
-                box-shadow: none;
-                margin-bottom: 20px;
-                break-inside: avoid;
+                background: #fff; border: 1px solid #000; border-left: 5px solid #000 !important;
+                box-shadow: none; margin-bottom: 20px; break-inside: avoid;
+                max-height: none; /* Expand full height for print */
+                display: block;
             }
-            .card h3 {
-                color: #000 !important;
-                border-bottom: 1px solid #ccc;
-                padding-bottom: 5px;
-            }
-            .card h3 span {
-                color: #000;
-                border-color: #000;
-            }
-            .code-block {
-                background: #f4f4f4;
-                color: #000;
-                border: 1px solid #ccc;
-            }
-            .code-block::after {
-                display: none;
-            }
-            .cmd-item {
-                border-bottom: 1px dotted #ccc;
-            }
+            .cmd-list { overflow-y: visible; max-height: none; } /* Show all commands */
+            .card h3 { color: #000 !important; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+            .card h3 span { color: #000; border-color: #000; }
+            .code-block { background: #f4f4f4; color: #000; border: 1px solid #ccc; font-size: 7pt; padding: 4px; }
+            .cmd-desc { color: #333; font-size: 8pt; }
+            .code-block::after { display: none; }
+            .cmd-item { border-bottom: 1px dotted #ccc; margin-bottom: 8px; padding-bottom: 4px; }
         }
 
-        /* Mobile Adjustments */
         @media screen and (max-width: 768px) {
-            .header-top {
-                flex-direction: column;
-                align-items: center;
-            }
-            .export-btn {
-                position: static;
-                margin-top: 15px;
-                transform: none;
-            }
+            .header-top { flex-direction: column; align-items: center; }
+            .export-btn { position: static; margin-top: 15px; transform: none; }
             h1 { font-size: 2rem; }
         }
-
     </style>
 </head>
 <body>
@@ -395,185 +342,83 @@
             <h1 data-text="MLOps_NEXUS">MLOps_NEXUS</h1>
             <button class="export-btn" onclick="exportPDF()">[ PDF_EXPORT ]</button>
         </div>
-        <p style="color: var(--neon-pink); margin-top: 10px;">>> SYSTEM READY // SELECT PROTOCOL v2.0</p>
+        <p style="color: var(--neon-pink); margin-top: 10px;">>> DATABASE EXPANDED // V3.0 FULL STACK</p>
     </header>
 
     <div class="filters">
-        <button class="filter-btn active" onclick="filterSelection('all')">ALL_SYSTEMS</button>
+        <button class="filter-btn active" onclick="filterSelection('all')">ALL</button>
         <button class="filter-btn" onclick="filterSelection('container')">CONTAINERS</button>
-        <button class="filter-btn" onclick="filterSelection('serving')">MODEL_SERVING</button>
-        <button class="filter-btn" onclick="filterSelection('ops')">OPS_&_OBSERVABILITY</button>
-        <button class="filter-btn" onclick="filterSelection('python-ml')">PYTHON_CORE</button>
-        <button class="filter-btn" onclick="filterSelection('scripting')">SCRIPTING</button>
+        <button class="filter-btn" onclick="filterSelection('serving')">SERVING</button>
+        <button class="filter-btn" onclick="filterSelection('ops')">OPS</button>
+        <button class="filter-btn" onclick="filterSelection('python-ml')">PYTHON</button>
+        <button class="filter-btn" onclick="filterSelection('scripting')">BASH</button>
     </div>
 
     <div class="container">
 
-        <div class="card python-ml">
-            <h3>PANDAS <span>DATA OPS</span></h3>
-            <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Charger Parquet (Rapide & Compact)</div>
-                    <code class="code-block">df = pd.read_parquet('data.parquet')</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Chunking (Gros Datasets)</div>
-                    <code class="code-block">for chunk in pd.read_csv('big.csv', chunksize=1000):</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Mémoire optimisée</div>
-                    <code class="code-block">df.info(memory_usage='deep')</code>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card python-ml">
-            <h3>PYTORCH <span>DL ENGINE</span></h3>
-            <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Sélection Auto Device (GPU/CPU)</div>
-                    <code class="code-block">device = "cuda" if torch.cuda.is_available() else "cpu"</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Sauvegarde Modèle (Weights Only)</div>
-                    <code class="code-block">torch.save(model.state_dict(), "model.pth")</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Inference Mode (No Grad)</div>
-                    <code class="code-block">with torch.inference_mode(): pred = model(x)</code>
-                </li>
-            </ul>
-        </div>
-
         <div class="card container-cat">
             <h3>DOCKER <span>CONTAINER</span></h3>
             <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Build image (tag actuel)</div>
-                    <code class="code-block">docker build -t my-model:v1 .</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Run interactif avec GPU</div>
-                    <code class="code-block">docker run --gpus all -it my-model:v1</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Nettoyage système (danger)</div>
-                    <code class="code-block">docker system prune -a</code>
-                </li>
+                <li class="cmd-item"><div class="cmd-desc">Build sans cache (Debug)</div><code class="code-block">docker build --no-cache -t img:v1 .</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Run interactif GPU</div><code class="code-block">docker run --gpus all -it --rm img:v1</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Stats (CPU/RAM live)</div><code class="code-block">docker stats</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Nettoyage radical</div><code class="code-block">docker system prune -a --volumes</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Voir IP d'un container</div><code class="code-block">docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [id]</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Exec en root</div><code class="code-block">docker exec -u 0 -it [container] bash</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Logs avec timestamp</div><code class="code-block">docker logs -t --tail 100 [container]</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Créer image depuis container</div><code class="code-block">docker commit [container_id] my-backup:v1</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Sauvegarder image en tar</div><code class="code-block">docker save -o image.tar my-image:v1</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Lister volumes orphelins</div><code class="code-block">docker volume ls -qf dangling=true</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Créer réseau bridge</div><code class="code-block">docker network create ml-net</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Copier fichier Host->Container</div><code class="code-block">docker cp ./model.bin [id]:/app/models/</code></li>
             </ul>
         </div>
 
         <div class="card container-cat">
-            <h3>KUBERNETES <span>ORCHESTRATION</span></h3>
+            <h3>KUBERNETES <span>K8S</span></h3>
             <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Lister pods (namespace courant)</div>
-                    <code class="code-block">kubectl get pods</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Logs container spécifique</div>
-                    <code class="code-block">kubectl logs -f [pod] -c [container]</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Port Forward (Accès local)</div>
-                    <code class="code-block">kubectl port-forward svc/my-service 8080:80</code>
-                </li>
+                <li class="cmd-item"><div class="cmd-desc">Get Pods (Tous namespaces)</div><code class="code-block">kubectl get pods -A</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Describe (Debug Crash)</div><code class="code-block">kubectl describe pod [pod-name]</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Logs précédent (CrashLoop)</div><code class="code-block">kubectl logs [pod] --previous</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Events (Pourquoi ça plante ?)</div><code class="code-block">kubectl get events --sort-by=.metadata.creationTimestamp</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Utilisation Node (CPU/RAM)</div><code class="code-block">kubectl top nodes</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Utilisation Pods</div><code class="code-block">kubectl top pods -n my-ns</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Port Forward (Bg)</div><code class="code-block">kubectl port-forward svc/ml-api 8000:80 &</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Changer image live</div><code class="code-block">kubectl set image deployment/myapp container=img:v2</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Supprimer pods 'Evicted'</div><code class="code-block">kubectl delete pods --field-selector=status.phase=Failed -A</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Check Permissions (RBAC)</div><code class="code-block">kubectl auth can-i create pods --as system:serviceaccount:ns:sa</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Expliquer ressource</div><code class="code-block">kubectl explain deployment.spec.strategy</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Scaler deployment</div><code class="code-block">kubectl scale --replicas=3 deployment/my-app</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Exec shell rapide</div><code class="code-block">kubectl exec -it [pod] -- /bin/bash</code></li>
             </ul>
         </div>
 
         <div class="card container-cat">
-            <h3>OPENSHIFT <span>ENTERPRISE K8S</span></h3>
+            <h3>OPENSHIFT <span>OCP</span></h3>
             <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Changer projet</div>
-                    <code class="code-block">oc project my-ml-project</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Route (URL) du service</div>
-                    <code class="code-block">oc get routes</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Shell dans un pod</div>
-                    <code class="code-block">oc rsh [pod-name]</code>
-                </li>
+                <li class="cmd-item"><div class="cmd-desc">Status du projet</div><code class="code-block">oc status</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Créer App depuis Git</div><code class="code-block">oc new-app https://github.com/org/repo --name=ml-api</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Logs du Build</div><code class="code-block">oc logs -f bc/ml-api</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Start Build manuellement</div><code class="code-block">oc start-build ml-api --follow</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Extraire un Secret</div><code class="code-block">oc extract secret/db-creds --to=.</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Debug Node (Admin)</div><code class="code-block">oc debug node/[node-name]</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Liste ImageStreams</div><code class="code-block">oc get is</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Ajouter droits Admin</div><code class="code-block">oc adm policy add-role-to-user admin user1 -n project</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Login avec Token</div><code class="code-block">oc login --token=sha256~... --server=https://api.ocp.domain:6443</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Port-forward route</div><code class="code-block">oc port-forward deployment/frontend 8080:8080</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Idle (Pause) app</div><code class="code-block">oc idle [service-name]</code></li>
             </ul>
         </div>
 
-        <div class="card serving">
-            <h3>HUGGING FACE <span>MODELS</span></h3>
+        <div class="card python-ml">
+            <h3>PANDAS <span>DATA</span></h3>
             <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Télécharger modèle (CLI)</div>
-                    <code class="code-block">huggingface-cli download gpt2</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Charger depuis cache local</div>
-                    <code class="code-block">AutoModel.from_pretrained("path/to/local", local_files_only=True)</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Login CLI</div>
-                    <code class="code-block">huggingface-cli login</code>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card serving">
-            <h3>VLLM <span>FAST INFERENCE</span></h3>
-            <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Serveur API OpenAI</div>
-                    <code class="code-block">python -m vllm.entrypoints.openai.api_server --model meta-llama/Llama-2-7b-hf</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Optimisation mémoire GPU</div>
-                    <code class="code-block">--gpu-memory-utilization 0.95</code>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card serving">
-            <h3>MLFLOW <span>LIFECYCLE</span></h3>
-            <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Lancer l'UI locale</div>
-                    <code class="code-block">mlflow ui --port 5000</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Autologging (Magique)</div>
-                    <code class="code-block">mlflow.autolog()</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Charger modèle pour pred</div>
-                    <code class="code-block">model = mlflow.pyfunc.load_model(model_uri)</code>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card ops">
-            <h3>ARGOCD <span>GITOPS</span></h3>
-            <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">Lister applications</div>
-                    <code class="code-block">argocd app list</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Forcer synchro (Deploy)</div>
-                    <code class="code-block">argocd app sync my-app --prune</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">Hard Refresh</div>
-                    <code class="code-block">argocd app get my-app --refresh</code>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card ops">
-            <h3>GRAFANA <span>VISUALIZATION</span></h3>
-            <ul class="cmd-list">
-                <li class="cmd-item">
-                    <div class="cmd-desc">PromQL: Usage CPU Pod</div>
-                    <code class="code-block">rate(container_cpu_usage_seconds_total[5m])</code>
-                </li>
-                <li class="cmd-item">
-                    <div class="cmd-desc">PromQL: Usage Mémoire</div>
- 
+                <li class="cmd-item"><div class="cmd-desc">Read Parquet (Optimisé)</div><code class="code-block">df = pd.read_parquet('data.parquet', columns=['a', 'b'])</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Profile Mémoire</div><code class="code-block">df.info(memory_usage='deep')</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Optimiser Types</div><code class="code-block">df['cat'] = df['cat'].astype('category')</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Value Counts %</div><code class="code-block">df['col'].value_counts(normalize=True)</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Query (SQL-like)</div><code class="code-block">df.query('score > 0.5 and group == "A"')</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Groupby Agg</div><code class="code-block">df.groupby('id').agg({'val': ['mean', 'max']})</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Melt (Wide to Long)</div><code class="code-block">pd.melt(df, id_vars=['id'], value_vars=['A', 'B'])</code></li>
+                <li class="cmd-item"><div class="cmd-desc">Explode (Listes)</div><code class="code-block">df.explode('list_col')</code></li>
+                <li class="cmd-item"
